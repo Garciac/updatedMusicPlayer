@@ -35,7 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/PictureView"
         android:layout_centerHorizontal="true"
-        android:text="SONG NAME"
         android:textSize="36sp" />
 
 

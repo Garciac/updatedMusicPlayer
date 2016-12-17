@@ -1,6 +1,9 @@
 package com.example.chrisgarcia.musicplayer;
 
+import android.media.MediaMetadata;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar mySongBarVar;
     private int seekTime;
 
+    static String songTitle, songArtist;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +41,21 @@ public class MainActivity extends AppCompatActivity {
         fastForwardButtonVar = (Button) findViewById(R.id.fastForwardButton);
 
         currentTimeViewVar = (TextView) findViewById(R.id.currentTimeView);
-        endTimeViewVar= (TextView) findViewById(R.id.endTimeView);
+        endTimeViewVar = (TextView) findViewById(R.id.endTimeView);
 
         mySongBarVar= (SeekBar) findViewById(R.id.SeekBar);
 
         songPlayer = MediaPlayer.create(this, R.raw.smoothocean);
+
+        MediaMetadataRetriever songInfo = new MediaMetadataRetriever();
+
+        Uri mediaPath = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.smoothocean);
+        songInfo.setDataSource(this, mediaPath);
+
+        songTitle = songInfo.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+        songArtist = songInfo.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+
+
 
         endTimeMS = songPlayer.getDuration();
         int endTimeMin = (int) endTimeMS/1000/60;
